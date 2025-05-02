@@ -1,16 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Input, Button } from "./index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { authService } from "../appwrite";
+import { useDispatch } from "react-redux";
+import { login as authLogin } from "../features/auth/authSlice";
+import toast from "react-hot-toast";
 
 function Login() {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const [loading, setLoading] = useState(false);
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
 
-	const login = async (data) => {};
+	const login = async (data) => {
+		try {
+			setLoading(true);
+			const session = await authService.loginUser(data);
+			if (session) {
+				const userData = await authService.getCurrentUser();
+				if (userData) {
+					dispatch(authLogin(userData));
+					toast.success("Login successful");
+					navigate("/");
+				} else {
+					toast.error(
+						"Could not fetch user data. Please try logging in again."
+					);
+				}
+			}
+		} catch (error) {
+			toast.error(error.message);
+			console.log(error.message);
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	return (
 		<div className="min-h-screen flex justify-center items-center">
@@ -59,8 +89,8 @@ function Login() {
 									{...register("password", {
 										required: true,
 										minLength: {
-											value: 6,
-											message: "Minimum length should be 6",
+											value: 8,
+											message: "Minimum length should be 8",
 										},
 										maxLength: {
 											value: 10,
@@ -80,7 +110,9 @@ function Login() {
 								) : null}
 
 								<div className="mt-10">
-									<Button type="submit">Log in</Button>
+									<Button type="submit" disabled={loading}>
+										{loading ? "Loggin in..." : "Log in"}
+									</Button>
 								</div>
 							</form>
 						</div>

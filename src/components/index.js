@@ -8,6 +8,7 @@ import Container from "./container/Container";
 import Login from "./Login";
 import Input from "./Input";
 import Button from "./Button";
+import VerifyEmail from "./VerifyEmail";
 
 export {
 	Login,
@@ -21,4 +22,5 @@ export {
 	Container,
 	Input,
 	Button,
+	VerifyEmail,
 };

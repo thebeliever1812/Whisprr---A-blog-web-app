@@ -5,7 +5,14 @@ import App from "./App.jsx";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Login, SignUp, MyBlogs, AddBlog, Home } from "./components/index.js";
+import {
+	Login,
+	SignUp,
+	MyBlogs,
+	AddBlog,
+	Home,
+	VerifyEmail,
+} from "./components/index.js";
 
 const router = createBrowserRouter([
 	{
@@ -33,6 +40,10 @@ const router = createBrowserRouter([
 	{
 		path: "/sign-up",
 		element: <SignUp />,
+	},
+	{
+		path: "/verify-email",
+		element: <VerifyEmail />,
 	},
 ]);
 

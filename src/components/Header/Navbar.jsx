@@ -4,11 +4,23 @@ import { NavLink, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { PiSignInBold } from "react-icons/pi";
 import { logout } from "../../features/auth/authSlice";
+import toast from "react-hot-toast";
+import authService from "../../appwrite/auth";
 
 function Navbar() {
 	const [hamburgerMenuStatus, setHamburgerMenuStatus] = useState(false);
 	const userLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 	const dispatch = useDispatch();
+
+	async function handleLogout() {
+		try {
+			await authService.logoutUser();
+			dispatch(logout());
+			toast.success("Logout successful");
+		} catch (error) {
+			toast.error();
+		}
+	}
 
 	return (
 		<header>
@@ -53,7 +65,7 @@ function Navbar() {
 						<Link
 							to="/"
 							className="logout-btn hidden sm:inline-block"
-							onClick={() => dispatch(logout())}
+							onClick={handleLogout}
 						>
 							Logout
 						</Link>
@@ -125,7 +137,7 @@ function Navbar() {
 							<Link
 								to="/"
 								className="menu-logout-btn logout-click text-center"
-								onClick={() => dispatch(logout())}
+								onClick={handleLogout}
 							>
 								Logout
 							</Link>
@@ -135,13 +147,13 @@ function Navbar() {
 					<>
 						<div className="flex flex-col gap-5 justify-start mt-6">
 							<div className="flex justify-center">
-								<Link to="/log-in" className="menu-logout-btn logout-click">
+								<Link to="/log-in" className="text-center menu-logout-btn logout-click">
 									Log in
 								</Link>
 							</div>
 
 							<div className="flex justify-center">
-								<Link to="/sign-up" className="menu-logout-btn logout-click">
+								<Link to="/sign-up" className="text-center menu-logout-btn logout-click">
 									Sign Up
 								</Link>
 							</div>

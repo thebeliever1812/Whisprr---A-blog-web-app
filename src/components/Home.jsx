@@ -1,12 +1,12 @@
 import React from "react";
-import {Container} from "./index";
+import { Container } from "./index";
 
 function Home() {
-	return <div>
-		<Container >
-			Hello World
-		</Container>
-	</div>;
+	return (
+		<div>
+			<Container>Hello World</Container>
+		</div>
+	);
 }
 
 export default Home;

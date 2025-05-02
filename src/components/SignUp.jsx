@@ -1,17 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Input, Button } from "./index";
 import { useForm } from "react-hook-form";
+import { authService } from "../appwrite/index";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../features/auth/authSlice";
+import toast from "react-hot-toast";
 
 function SignUp() {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const [loading, setLoading] = useState(false);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
 
-	const createUserAccount = async (data) => {
+	const createUser = async (data) => {
 		try {
-		} catch (error) {}
+			setLoading(true);
+			const session = await authService.createUserAccount(data);
+			if (session) {
+				const userData = await authService.getCurrentUser();
+				if (userData) {
+					dispatch(login(userData));
+					navigate("/");
+				}
+			} else {
+				toast.error("No active session found");
+			}
+		} catch (error) {
+			toast.error(error.message);
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -24,7 +48,7 @@ function SignUp() {
 						</div>
 
 						<div className="login-form mt-2 sm:mt-5">
-							<form onSubmit={handleSubmit(createUserAccount)}>
+							<form onSubmit={handleSubmit(createUser)}>
 								<Input
 									label="Full Name"
 									placeholder="Enter your Full Name"
@@ -78,8 +102,8 @@ function SignUp() {
 									{...register("password", {
 										required: true,
 										minLength: {
-											value: 6,
-											message: "Minimum length should be 6",
+											value: 8,
+											message: "Minimum length should be 8",
 										},
 										maxLength: {
 											value: 10,
@@ -99,7 +123,9 @@ function SignUp() {
 								) : null}
 
 								<div className="mt-10">
-									<Button>Sign up</Button>
+									<Button type="submit" disabled={loading}>
+										{loading ? "Signing up..." : "Sign up"}
+									</Button>
 								</div>
 							</form>
 						</div>

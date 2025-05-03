@@ -35,17 +35,19 @@ function App() {
 			{loading ? (
 				<div className="loader"></div>
 			) : (
-				<div className="relative min-h-screen bg-gradient-to-br from-white via-white to-white overflow-hidden">
+				<div className="relative min-h-screen bg-gradient-to-br from-white via-white to-white overflow-hidden ">
 					{/* blurred floating shapes */}
 					<div className="absolute top-[-100px] left-[-50px] w-[400px] h-[400px] bg-amber-300 opacity-20 rounded-full filter blur-3xl"></div>
 					<div className="absolute bottom-[-150px] right-[-100px] w-[500px] h-[500px] bg-white opacity-10 rounded-full filter blur-3xl"></div>
 					<div className="absolute top-[300px] right-[150px] w-[300px] h-[300px] bg-amber-300 opacity-20 rounded-full filter blur-2xl"></div>
 
 					{/* main content */}
-					<div className="relative z-10">
+					<div className="relative z-10 flex flex-col min-h-screen">
 						<Toaster position="top-right" />
 						<Header />
-						<Outlet />
+						<main className="grow">
+							<Outlet />
+						</main>
 						<Footer />
 					</div>
 				</div>

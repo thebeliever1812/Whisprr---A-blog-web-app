@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+.footer-head-div {
+	@apply py-2 px-1 sm:px-4;
+}
+
+.footer-heading {
+	@apply text-amber-300 font-medium select-none;
+}
+
+.footer-sub-heading {
+	@apply hover:text-gray-400;
+}
+
+.footer-sub-heading-container {
+	@apply flex flex-col items-start;
+}

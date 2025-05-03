@@ -24,7 +24,11 @@
 }
 
 .nav-btns {
-	@apply hidden sm:block hover:text-white rounded-full px-2.5 py-1 hover:bg-amber-300 border-none;
+	@apply hidden sm:block hover:text-white font-medium rounded-full px-2.5 py-1 hover:bg-amber-300 transition-[background-color] duration-300 border-none;
+}
+
+.outer-boundary:hover {
+	@apply transition-[box-shadow] duration-300 ease-in-out shadow-[0_0_20px_1px_#ffcc00];
 }
 
 .logout-btn {

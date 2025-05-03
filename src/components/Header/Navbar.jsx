@@ -26,8 +26,10 @@ function Navbar() {
 		<header>
 			<nav
 				className={`flex w-full items-center sm:justify-around justify-between ${
-					hamburgerMenuStatus ? "bg-[#080808] text-white" : "backdrop-blur-sm"
-				} sm:bg-transparent sm:text-black p-1 px-4  md:px-10 text-base md:text-lg`}
+					hamburgerMenuStatus
+						? "bg-[#080808] text-white"
+						: "bg-gradient-to-r from-amber-50 to-white"
+				} sm:text-black p-1 px-4 md:px-10 text-base md:text-lg fixed z-50 shadow-md transition duration-300`}
 			>
 				{userLoggedIn ? (
 					<>
@@ -35,7 +37,7 @@ function Navbar() {
 							<img src="/Logo.png" alt="" className="object-cover" />
 						</Link>
 
-						<div className="hidden sm:flex items-center justify-between gap-10 border-2 border-amber-200  rounded-full p-0.5">
+						<div className="outer-boundary hidden sm:flex items-center justify-between gap-10 border-2 border-amber-200 rounded-full p-0.5">
 							<NavLink
 								to="/"
 								className={({ isActive }) =>
@@ -147,13 +149,19 @@ function Navbar() {
 					<>
 						<div className="flex flex-col gap-5 justify-start mt-6">
 							<div className="flex justify-center">
-								<Link to="/log-in" className="text-center menu-logout-btn logout-click">
+								<Link
+									to="/log-in"
+									className="text-center menu-logout-btn logout-click"
+								>
 									Log in
 								</Link>
 							</div>
 
 							<div className="flex justify-center">
-								<Link to="/sign-up" className="text-center menu-logout-btn logout-click">
+								<Link
+									to="/sign-up"
+									className="text-center menu-logout-btn logout-click"
+								>
 									Sign Up
 								</Link>
 							</div>

@@ -4,7 +4,9 @@ import { Container } from "./index";
 function Home() {
 	return (
 		<div>
-			<Container>Hello World</Container>
+			<Container>
+			Hello World
+			</Container>
 		</div>
 	);
 }

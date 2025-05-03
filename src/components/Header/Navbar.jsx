@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RxHamburgerMenu, RxCross2 } from "react-icons/rx";
 import { NavLink, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,9 @@ function Navbar() {
 	const userLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 	const dispatch = useDispatch();
 
+	const [showNavbar, setShowNavbar] = useState(true);
+	const [lastScrollY, setLastScrollY] = useState(0);
+
 	async function handleLogout() {
 		try {
 			await authService.logoutUser();
@@ -22,19 +25,35 @@ function Navbar() {
 		}
 	}
 
+	const handleScroll = () => {
+		const currentScrollY = window.scrollY;
+		if (currentScrollY > lastScrollY && currentScrollY > 50) {
+			setShowNavbar(false); // scroll down → hide
+		} else {
+			setShowNavbar(true); // scroll up → show
+		}
+		setLastScrollY(currentScrollY);
+	};
+
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, [lastScrollY]);
+
 	return (
 		<header>
 			<nav
-				className={`flex w-full items-center sm:justify-around justify-between ${
-					hamburgerMenuStatus
-						? "bg-[#080808] text-white"
-						: "bg-gradient-to-r from-amber-50 to-white"
-				} sm:text-black p-1 px-4 md:px-10 text-base md:text-lg fixed z-50 shadow-md transition duration-300`}
+				className={`flex w-full items-center sm:justify-around justify-between bg-gradient-to-r from-amber-50 to-white ${
+					showNavbar ? "translate-y-0" : "-translate-y-full"
+				} sm:text-black p-1 px-4 md:px-10 text-base md:text-lgz-50 shadow-md transition duration-300 fixed`}
 			>
 				{userLoggedIn ? (
 					<>
-						<Link to="/" className="logo max-w-28">
-							<img src="/Logo.png" alt="" className="object-cover" />
+						<Link
+							to="/"
+							className="logo max-w-30 sm:max-w-40  object-cover object-center"
+						>
+							<img src="/Logo.png" alt="" />
 						</Link>
 
 						<div className="outer-boundary hidden sm:flex items-center justify-between gap-10 border-2 border-amber-200 rounded-full p-0.5">
@@ -76,12 +95,15 @@ function Navbar() {
 							className="hamburger-menu sm:hidden cursor-pointer"
 							onClick={() => setHamburgerMenuStatus((prev) => !prev)}
 						>
-							{hamburgerMenuStatus ? <RxCross2 /> : <RxHamburgerMenu />}
+							{hamburgerMenuStatus ? "" : <RxHamburgerMenu />}
 						</div>
 					</>
 				) : (
 					<>
-						<Link to="/" className="logo max-w-28">
+						<Link
+							to="/"
+							className="logo max-w-30 sm:max-w-40  object-cover object-center"
+						>
 							<img src="/Logo.png" alt="" className="object-cover" />
 						</Link>
 
@@ -99,7 +121,7 @@ function Navbar() {
 							className="hamburger-menu sm:hidden cursor-pointer"
 							onClick={() => setHamburgerMenuStatus((prev) => !prev)}
 						>
-							{hamburgerMenuStatus ? <RxCross2 /> : <PiSignInBold />}
+							{hamburgerMenuStatus ? "" : <PiSignInBold />}
 						</div>
 					</>
 				)}
@@ -107,11 +129,17 @@ function Navbar() {
 			<div
 				className={`flex flex-col justify-between sm:hidden expand-menu h-screen w-full ${
 					hamburgerMenuStatus ? "open-menu" : "close-menu"
-				} bg-[#080808] p-2 ps-5  px-4`}
+				} bg-[#080808] p-2 ps-5 z-50 px-4`}
 			>
 				{userLoggedIn ? (
 					<>
 						<div className="flex flex-col">
+							<div
+								className="hamburger-cross"
+								onClick={() => setHamburgerMenuStatus((prev) => !prev)}
+							>
+								{hamburgerMenuStatus ? <RxCross2 /> : ""}
+							</div>
 							<NavLink
 								to="/"
 								className="menu-btns"
@@ -148,6 +176,12 @@ function Navbar() {
 				) : (
 					<>
 						<div className="flex flex-col gap-5 justify-start mt-6">
+							<div
+								className="hamburger-cross"
+								onClick={() => setHamburgerMenuStatus((prev) => !prev)}
+							>
+								{hamburgerMenuStatus ? <RxCross2 /> : ""}
+							</div>
 							<div className="flex justify-center">
 								<Link
 									to="/log-in"

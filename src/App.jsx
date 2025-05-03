@@ -21,7 +21,7 @@ function App() {
 			.then((userData) => {
 				if (userData) {
 					dispatch(login(userData));
-					navigate("/");
+					// navigate("/");
 				} else {
 					dispatch(logout());
 					navigate("/");

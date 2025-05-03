@@ -23,6 +23,10 @@
 	@apply text-white hover:bg-[#181818] py-1 px-2 active:bg-white active:text-black;
 }
 
+.hamburger-cross {
+	@apply  text-white sm:hidden cursor-pointer self-end
+}
+
 .nav-btns {
 	@apply hidden sm:block hover:text-white font-medium rounded-full px-2.5 py-1 hover:bg-amber-300 transition-[background-color] duration-300 border-none;
 }

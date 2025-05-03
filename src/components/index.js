@@ -9,6 +9,7 @@ import Login from "./Login";
 import Input from "./Input";
 import Button from "./Button";
 import VerifyEmail from "./VerifyEmail";
+import RTE from "./RTE/RTE";
 
 export {
 	Login,
@@ -23,4 +24,5 @@ export {
 	Input,
 	Button,
 	VerifyEmail,
+	RTE,
 };

@@ -21,6 +21,7 @@ export class DatabasesService {
 				slug,
 				{
 					title,
+					slug,
 					content,
 					status,
 					image,
@@ -42,6 +43,7 @@ export class DatabasesService {
 				slug,
 				{
 					title,
+					slug,
 					content,
 					status,
 					image,

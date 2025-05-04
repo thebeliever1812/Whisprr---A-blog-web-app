@@ -10,6 +10,7 @@ import Input from "./Input";
 import Button from "./Button";
 import VerifyEmail from "./VerifyEmail";
 import RTE from "./RTE/RTE";
+import SelectStatus from "./SelectStatus";
 
 export {
 	Login,
@@ -25,4 +26,5 @@ export {
 	Button,
 	VerifyEmail,
 	RTE,
+	SelectStatus
 };

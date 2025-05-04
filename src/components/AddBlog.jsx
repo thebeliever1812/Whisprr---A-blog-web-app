@@ -1,9 +1,14 @@
-import React from "react";
-import { Container, Input } from "./index";
+import React, { useCallback, useEffect } from "react";
+import { Container, Input, RTE, SelectStatus } from "./index";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { storageService, databasesService } from "../appwrite";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 function AddBlog({ post }) {
+	const userData = useSelector((state) => state.auth.userData);
+
 	const {
 		register,
 		handleSubmit,
@@ -21,32 +26,192 @@ function AddBlog({ post }) {
 		},
 	});
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
-	const submit = () => {};
+	const submit = async (data) => {
+		try {
+			if (post) {
+				let uploadedImageFile = post.image;
+
+				const newImageFile = data?.image?.[0]
+					? await storageService.uploadFile(data.image[0])
+					: null;
+
+				if (newImageFile) {
+					// if newImageFile exist that means we have to delete the older file
+					await storageService.deleteFile(post.image);
+					uploadedImageFile = newImageFile.$id;
+				}
+
+				// Update database
+				const dbPost = await databasesService.updatePost(post.$id, {
+					...data,
+					image: uploadedImageFile,
+				});
+
+				if (dbPost) {
+					toast.success("Blog updated successfully");
+					navigate(`/post/${dbPost.$id}`);
+				}
+			} else {
+				const imageFile = data?.image?.[0]
+					? await storageService.uploadFile(data.image[0])
+					: null;
+
+				if (imageFile) {
+					const imageFileId = imageFile.$id;
+
+					const dbPost = await databasesService.createPost({
+						...data,
+						userId: userData.userId,
+					});
+
+					if (dbPost) {
+						toast.success("Blog created successfully");
+						navigate(`/post/${dbPost.$id}`);
+					}
+				}
+			}
+		} catch (error) {
+			console.log(`addPost error : ${error.message}`);
+			throw error;
+		}
+	};
+
+	const slugTransform = useCallback((value) => {
+		if (value && typeof value === "string") {
+			return value
+				.trim()
+				.toLowerCase()
+				.replace(/[^a-zA-Z\d]+/g, "_")
+				.replace(/^_+|_+$/g, "")
+				.replace(/_+/g, "_");
+		}
+		return "";
+	}, []);
+
+	useEffect(() => {
+		const subscription = watch((value, { name }) => {
+			if (name === "title") {
+				setValue("slug", slugTransform(value.title), { shouldValidate: true });
+			}
+		});
+		return () => subscription.unsubscribe();
+	}, [watch, slugTransform, setValue]);
 
 	return (
 		<Container>
-			<div className="bg-white w-full p-2 rounded-md">
+			<div className="bg-white w-full p-2 rounded-md shadow">
 				<form onSubmit={handleSubmit(submit)}>
-					<Input
-						label="Title :"
-						type="text"
-						placeholder="Blog Title here"
-						required="true"
-						labelClass="text-base sm:text-lg"
-						{...register("title", { required: true, maxLength: 20 })}
-						aria-invalid={errors.title ? "true" : "false"}
-					/>
-					{errors.title?.type === "required" ? (
-						<p role="alert" className="text-red-500">
-							Title is required
-						</p>
-					) : errors.mail ? (
-						<p role="alert" className="text-red-500">
-							{errors.mail.message}
-						</p>
-					) : null}
+					<div className="sm:flex sm:gap-2 items-start">
+						<div className="w-full sm:w-full sm:max-w-2/3">
+							<Input
+								label="Title :"
+								type="text"
+								placeholder="Blog Title here"
+								required="true"
+								labelClass="text-base sm:text-lg"
+								{...register("title", { required: true, maxLength: 20 })}
+								aria-invalid={errors.title ? "true" : "false"}
+							/>
+							{errors.title?.type === "required" ? (
+								<p role="alert" className="text-red-500">
+									Title is required
+								</p>
+							) : errors.title ? (
+								<p role="alert" className="text-red-500">
+									{errors.title.message}
+								</p>
+							) : null}
+
+							<Input
+								label="Slug :"
+								type="text"
+								placeholder="Slug here"
+								labelClass="text-base sm:text-lg"
+								inputClass="no-focus cursor-not-allowed"
+								{...register("slug", { required: true, maxLength: 20 })}
+								onInput={(e) => {
+									setValue("slug", slugTransform(e.currentTarget.value), {
+										shouldValidate: true,
+									});
+								}}
+								disabled
+							/>
+
+							<RTE
+								label="Content :"
+								name="content"
+								labelClass="text-base sm:text-lg"
+								required
+								control={control}
+								defaultValue={getValues("content")}
+								rules={{ required: true }}
+								errors={errors}
+							/>
+						</div>
+
+						<div className="w-full sm:w-full sm:max-w-1/3">
+							<Input
+								label="Upload image :"
+								type="file"
+								required
+								labelClass="text-base sm:text-lg"
+								inputClass="cursor-pointer"
+								{...register("image", { required: !post })}
+								aria-invalid={errors.image ? "true" : "false"}
+							/>
+							{errors.image?.type === "required" ? (
+								<p role="alert" className="text-red-500">
+									Image is required
+								</p>
+							) : errors.image ? (
+								<p role="alert" className="text-red-500">
+									{errors.image.message}
+								</p>
+							) : null}
+
+							{post ? (
+								<div className="w-full p-1 bg-red-400 mb-3 sm:mb-4 rounded-md">
+									<img
+										src={storageService.getFilePreview(post.image)}
+										alt={post.title}
+										className=""
+									/>
+								</div>
+							) : null}
+
+							<SelectStatus
+								label="Status :"
+								required
+								labelClass="text-base sm:text-lg"
+								selectClass="cursor-pointer"
+								options={[
+									{ label: "Select Active or Inactive", value: "" },
+									{ label: "Active", value: "active" },
+									{ label: "Inactive", value: "inactive" },
+								]}
+								{...register("status", { required: true })}
+								aria-invalid={errors.status ? "true" : "false"}
+							/>
+							{errors.status?.type === "required" ? (
+								<p role="alert" className="text-red-500">
+									Status is required
+								</p>
+							) : errors.status ? (
+								<p role="alert" className="text-red-500">
+									{errors.status.message}
+								</p>
+							) : null}
+
+							<button
+								type="submit"
+								className="w-full inline-block py-2 px-6 rounded-l-xl rounded-t-xl bg-[#7747FF] hover:bg-white hover:text-[#7747FF] focus:text-[#7747FF] focus:bg-gray-200 text-gray-50 font-bold leading-loose transition duration-200 cursor-pointer border-2 hover:border-[#7747FF] border-white"
+							>
+								{post ? "Update" : "Submit"}
+							</button>
+						</div>
+					</div>
 				</form>
 			</div>
 		</Container>

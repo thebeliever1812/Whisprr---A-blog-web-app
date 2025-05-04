@@ -43,9 +43,9 @@ function Navbar() {
 	return (
 		<header>
 			<nav
-				className={`flex w-full items-center sm:justify-around justify-between bg-gradient-to-r from-amber-50 to-white ${
+				className={`z-50 flex w-full items-center sm:justify-around justify-between bg-gradient-to-r from-amber-50 to-white ${
 					showNavbar ? "translate-y-0" : "-translate-y-full"
-				} sm:text-black p-1 px-4 md:px-10 text-base md:text-lgz-50 shadow-md transition duration-300 fixed`}
+				} sm:text-black p-1 px-4 md:px-10 text-base md:text-lgz-50 shadow-md transition duration-300 fixed `}
 			>
 				{userLoggedIn ? (
 					<>

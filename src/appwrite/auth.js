@@ -47,7 +47,7 @@ export class AuthService {
 
 		if (!user.emailVerification) {
 			await this.account.createVerification(
-				"http://localhost:5173/verify-email"
+				"https://whisprr-fawn.vercel.app/verify-email"
 			);
 			alert(
 				"Account created! A verification link has been sent to your email. Please click it to verify your account"

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Container, Input, RTE, SelectStatus } from "./index";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 
 function AddBlog({ post }) {
 	const userData = useSelector((state) => state.auth.userData);
+	const [loading, setLoading] = useState(false);
 
 	const {
 		register,
@@ -30,6 +31,16 @@ function AddBlog({ post }) {
 
 	const submit = async (data) => {
 		try {
+			setLoading(true);
+
+			// Always generate final slug before submission
+			data.slug = slugTransform(data.title);
+
+			if (!data.slug) {
+				toast.error("Title is required to generate a slug.");
+				return;
+			}
+
 			if (post) {
 				let uploadedImageFile = post.image;
 
@@ -38,12 +49,10 @@ function AddBlog({ post }) {
 					: null;
 
 				if (newImageFile) {
-					// if newImageFile exist that means we have to delete the older file
 					await storageService.deleteFile(post.image);
 					uploadedImageFile = newImageFile.$id;
 				}
 
-				// Update database
 				const dbPost = await databasesService.updatePost(post.$id, {
 					...data,
 					image: uploadedImageFile,
@@ -63,18 +72,23 @@ function AddBlog({ post }) {
 
 					const dbPost = await databasesService.createPost({
 						...data,
-						userId: userData.userId,
+						image: imageFileId,
+						userId: userData.$id,
 					});
 
 					if (dbPost) {
 						toast.success("Blog created successfully");
 						navigate(`/post/${dbPost.$id}`);
+					} else {
+						toast.error("Failed to create blog post.");
 					}
 				}
 			}
 		} catch (error) {
 			console.log(`addPost error : ${error.message}`);
-			throw error;
+			toast.error(error.message);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -206,9 +220,18 @@ function AddBlog({ post }) {
 
 							<button
 								type="submit"
-								className="w-full inline-block py-2 px-6 rounded-l-xl rounded-t-xl bg-[#7747FF] hover:bg-white hover:text-[#7747FF] focus:text-[#7747FF] focus:bg-gray-200 text-gray-50 font-bold leading-loose transition duration-200 cursor-pointer border-2 hover:border-[#7747FF] border-white"
+								disabled={loading}
+								className={`w-full inline-block py-2 px-6 rounded-l-xl rounded-t-xl bg-[#7747FF] hover:bg-white hover:text-[#7747FF] focus:text-[#7747FF] focus:bg-gray-200 text-gray-50 font-bold leading-loose transition duration-200  border-2 hover:border-[#7747FF] border-white ${
+									loading ? "cursor-not-allowed" : "cursor-pointer"
+								}`}
 							>
-								{post ? "Update" : "Submit"}
+								{loading
+									? post
+										? "Updating"
+										: "Submitting"
+									: post
+									? "Update"
+									: "Submit"}
 							</button>
 						</div>
 					</div>

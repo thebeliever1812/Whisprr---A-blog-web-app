@@ -14,6 +14,8 @@ import {
 	VerifyEmail,
 } from "./components/index.js";
 
+import { Post } from "./pages/index.js";
+
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -30,6 +32,10 @@ const router = createBrowserRouter([
 			{
 				path: "/add-blog",
 				element: <AddBlog />,
+			},
+			{
+				path: "/post/:slug",
+				element: <Post />,
 			},
 		],
 	},

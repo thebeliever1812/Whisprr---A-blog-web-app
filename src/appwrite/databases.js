@@ -26,8 +26,10 @@ export class DatabasesService {
 					status,
 					image,
 					userId,
+					createdAt: new Date().toISOString(),
 				}
 			);
+
 			return dbPost;
 		} catch (error) {
 			console.log(`createPost error : ${error.message}`);
@@ -43,7 +45,6 @@ export class DatabasesService {
 				slug,
 				{
 					title,
-					slug,
 					content,
 					status,
 					image,

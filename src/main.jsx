@@ -12,6 +12,7 @@ import {
 	AddBlog,
 	Home,
 	VerifyEmail,
+	PostCard,
 } from "./components/index.js";
 
 import { Post } from "./pages/index.js";
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
 		path: "/verify-email",
 		element: <VerifyEmail />,
 	},
+	{
+		path: '/post',
+		element: <PostCard />
+	}
 ]);
 
 createRoot(document.getElementById("root")).render(

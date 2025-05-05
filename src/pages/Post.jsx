@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "../components";
-import { storageService, databasesService } from "../appwrite";
-import { useSelector } from "react-redux";
+import { databasesService } from "../appwrite";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import parse from "html-react-parser";
@@ -38,7 +36,7 @@ function Post() {
 			: "/fallback.png";
 
 	return (
-	<div className="my-20">
+	<div className="my-20 px-2">
 			{post ? (
 				<div className="flex items-start justify-center mt-4">
 					<div className="flex flex-col max-w-2xl rounded-xl bg-white text-gray-700 shadow-md">

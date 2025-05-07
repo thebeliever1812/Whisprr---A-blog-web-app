@@ -11,6 +11,7 @@ function PostCard({ $id, title, image, status, showStatus = false }) {
 						src={`https://cloud.appwrite.io/v1/storage/buckets/${conf.appwriteBucketId}/files/${image}/view?project=${conf.appwriteProjectId}`}
 						alt={`${title} image`}
 						onError={(e) => (e.target.src = "/fallback.png")}
+						className="object-cover w-full h-full"
 					/>
 				</div>
 				<div className="p-6">

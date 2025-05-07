@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { databasesService } from "../appwrite";
-import { useNavigate, useParams } from "react-router-dom";
+import { databasesService, storageService } from "../appwrite";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import parse from "html-react-parser";
 import "../Loader.css";
 import conf from "../conf/conf";
+import { RiDeleteBin5Fill } from "react-icons/ri";
+import { CiEdit } from "react-icons/ci";
+import { useSelector } from "react-redux";
 
 function Post() {
 	const navigate = useNavigate();
 	const [post, setPost] = useState(null);
 	const { slug } = useParams();
+	const userData = useSelector((state) => state.auth.userData);
 
 	useEffect(() => {
 		if (slug) {
@@ -35,6 +39,23 @@ function Post() {
 			? `https://cloud.appwrite.io/v1/storage/buckets/${conf.appwriteBucketId}/files/${post.image}/view?project=${conf.appwriteProjectId}`
 			: "/fallback.png";
 
+	async function handleDelete(post) {
+		try {
+			if (post) {
+				if (post?.image) {
+					await storageService.deleteFile(post.image);
+				}
+				await databasesService.deletePost(post.$id);
+				toast.success('Post Deleted Successfully')
+				navigate('/')
+			} else {
+				console.log("No post Available for delete");
+			}
+		} catch (error) {
+			console.log(`handleDelete error : ${error.message}`);
+		}
+	}
+
 	return (
 		<div className="my-20 px-2">
 			{post ? (
@@ -56,15 +77,33 @@ function Post() {
 							<div className="text-xl text-gray-700">{parse(post.content)}</div>
 						</div>
 
-						<div className="profile-name-container flex justify-between items-center p-6">
-							<div className="flex gap-2"></div>
-							<p className="text-base text-gray-700">
+						<div className="btn-date-container gap-2 w-full flex justify-between items-center p-6">
+							<div className="flex gap-3  text-xl sm:text-3xl sm:gap-6">
+								{/* is current user is the author of post */}
+								{userData?.$id === post?.userId && (
+									<>
+										<Link
+											className="edit-btn text-blue-700 cursor-pointer"
+											to={`/edit-post/${post.$id}`}
+										>
+											<CiEdit />
+										</Link>
+										<button
+											className="delete-btn text-red-600 cursor-pointer"
+											onClick={() => handleDelete(post)}
+										>
+											<RiDeleteBin5Fill />
+										</button>
+									</>
+								)}
+							</div>
+							<div className="text-base text-gray-700 sm:text-lg ">
 								{new Date(post.createdAt).toLocaleDateString("en-IN", {
 									day: "numeric",
 									month: "short",
 									year: "numeric",
 								})}
-							</p>
+							</div>
 						</div>
 					</div>
 				</div>

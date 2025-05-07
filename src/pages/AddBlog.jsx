@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { storageService, databasesService } from "../appwrite";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import conf from "../conf/conf";
 
 function AddBlog({ post }) {
 	const userData = useSelector((state) => state.auth.userData);
@@ -34,12 +35,12 @@ function AddBlog({ post }) {
 			setLoading(true);
 
 			// Always generate final slug before submission
-			data.slug = slugTransform(data.title);
+			// data.slug = slugTransform(data.title);
 
-			if (!data.slug) {
-				toast.error("Title is required to generate a slug.");
-				return;
-			}
+			// if (!data.slug) {
+			// 	toast.error("Title is required to generate a slug.");
+			// 	return;
+			// }
 
 			if (post) {
 				let uploadedImageFile = post.image;
@@ -186,9 +187,9 @@ function AddBlog({ post }) {
 							) : null}
 
 							{post ? (
-								<div className="w-full p-1 bg-red-400 mb-3 sm:mb-4 rounded-md">
+								<div className="w-full p-1 mb-3 sm:mb-4 rounded-md">
 									<img
-										src={storageService.getFilePreview(post.image)}
+										src={`https://cloud.appwrite.io/v1/storage/buckets/${conf.appwriteBucketId}/files/${post.image}/view?project=${conf.appwriteProjectId}`}
 										alt={post.title}
 										className=""
 									/>

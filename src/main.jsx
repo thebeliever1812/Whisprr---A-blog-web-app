@@ -13,7 +13,7 @@ import {
 	PostCard,
 } from "./components/index.js";
 
-import { Post, MyBlogs, AddBlog } from "./pages/index.js";
+import { Post, MyBlogs, AddBlog, EditPost } from "./pages/index.js";
 
 const router = createBrowserRouter([
 	{
@@ -35,6 +35,10 @@ const router = createBrowserRouter([
 			{
 				path: "/post/:slug",
 				element: <Post />,
+			},
+			{
+				path: "/edit-post/:slug",
+				element: <EditPost />,
 			},
 		],
 	},

@@ -14,7 +14,7 @@ function Home() {
 					<AllPosts />
 				</div>
 			) : (
-				<div class="e-card playing flex flex-col items-center justify-center">
+				<div className="e-card playing flex flex-col items-center justify-center">
 					{/* <div class="image"></div> */}
 					<div className="wave"></div>
 					<div className="wave"></div>

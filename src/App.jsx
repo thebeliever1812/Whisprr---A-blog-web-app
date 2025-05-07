@@ -13,8 +13,6 @@ function App() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	// const isUserLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-
 	useEffect(() => {
 		authService
 			.getCurrentUser()

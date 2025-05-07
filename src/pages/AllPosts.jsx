@@ -5,6 +5,7 @@ import { Container, PostCard } from "../components";
 import "../Loader.css";
 import Masonry from "react-masonry-css";
 import "./AllPosts.css";
+import { useSelector } from "react-redux";
 
 function AllPosts() {
 	const [posts, setPosts] = useState([]);
@@ -16,7 +17,13 @@ function AllPosts() {
 		500: 1,
 	};
 
+	const userLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
 	useEffect(() => {
+		if (!userLoggedIn) {
+			return;
+		}
+
 		setLoading(true);
 		databasesService
 			.getPosts()
@@ -29,7 +36,7 @@ function AllPosts() {
 			})
 			.catch((error) => toast.error(`All posts error : ${error.message}`))
 			.finally(() => setLoading(false));
-	}, []);
+	}, [userLoggedIn]);
 
 	return (
 		<Container>

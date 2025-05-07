@@ -85,7 +85,7 @@ export class DatabasesService {
 		}
 	}
 
-	async getPosts(queries = [Query.equal("status", "active")]) {
+	async getPosts(queries = [Query.equal("status", "active"), Query.orderDesc('createdAt')]) {
 		try {
 			const posts = await this.databases.listDocuments(
 				conf.appwriteDatabaseId,

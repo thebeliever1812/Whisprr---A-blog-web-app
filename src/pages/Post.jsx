@@ -36,12 +36,17 @@ function Post() {
 			: "/fallback.png";
 
 	return (
-	<div className="my-20 px-2">
+		<div className="my-20 px-2">
 			{post ? (
 				<div className="flex items-start justify-center mt-4">
 					<div className="flex flex-col max-w-2xl rounded-xl bg-white text-gray-700 shadow-md">
 						<div className="overflow-hidden rounded-t-xl">
-							<img src={imageUrl} className="w-full object-cover" />
+							<img
+								src={imageUrl}
+								alt={`${post.title} image`}
+								className="w-full object-cover"
+								onError={(e) => (e.target.src = "/fallback.png")}
+							/>
 						</div>
 
 						<div className="p-6 flex flex-col gap-3">
@@ -64,7 +69,7 @@ function Post() {
 					</div>
 				</div>
 			) : (
-				<div className="w-full flex justify-center ">
+				<div className="loading -element w-full flex justify-center ">
 					<div className=" max-w-sm p-4 border border-gray-200 rounded shadow animate-pulse md:p-6 dark:border-gray-400">
 						<div className="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded dark:bg-gray-400">
 							<svg

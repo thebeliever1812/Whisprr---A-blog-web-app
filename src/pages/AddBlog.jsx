@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Container, Input, RTE, SelectStatus } from "./index";
+import { Container, Input, RTE, SelectStatus } from "../components";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { storageService, databasesService } from "../appwrite";

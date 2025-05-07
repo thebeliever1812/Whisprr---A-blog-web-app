@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { Container, PostCard } from "../components";
 import "../Loader.css";
 import Masonry from "react-masonry-css";
-import './AllPosts.css'
+import "./AllPosts.css";
 
 function AllPosts() {
 	const [posts, setPosts] = useState([]);
@@ -30,11 +30,13 @@ function AllPosts() {
 			.catch((error) => toast.error(`All posts error : ${error.message}`))
 			.finally(() => setLoading(false));
 	}, []);
-    
+
 	return (
 		<Container>
 			{loading ? (
-				<div className="loader top-20"></div>
+				<div className="w-full flex justify-center mt-5">
+					<div className="loader"></div>
+				</div>
 			) : (
 				<Masonry
 					breakpointCols={breakpointColumnsObj}

@@ -1,6 +1,4 @@
 import SignUp from "./SignUp";
-import MyBlogs from "./MyBlogs";
-import AddBlog from "./AddBlog";
 import Home from "./Home";
 import { Header, Navbar } from "./Header";
 import Footer from "./Footer/Footer";
@@ -16,8 +14,6 @@ import PostCard from "./PostCard";
 export {
 	Login,
 	SignUp,
-	MyBlogs,
-	AddBlog,
 	Home,
 	Header,
 	Footer,

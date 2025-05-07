@@ -1,5 +1,4 @@
 import React from "react";
-import { Container } from "./index";
 import { useSelector } from "react-redux";
 import "./Ecard.css";
 import { Link } from "react-router-dom";

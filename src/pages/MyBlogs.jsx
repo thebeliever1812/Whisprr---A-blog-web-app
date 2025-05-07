@@ -43,25 +43,25 @@ function MyBlogs() {
 		fetchMyPosts();
 	}, []);
 	return (
-		<>
+		<Container>
 			{loading ? (
-				<div className="loader"></div>
+				<div className="w-full flex justify-center mt-5">
+					<div className="loader"></div>
+				</div>
 			) : (
-				<Container>
-					<Masonry
-						breakpointCols={breakpointColumnsObj}
-						className="my-masonry-grid"
-						columnClassName="my-masonry-grid_column"
-					>
-						{posts?.map((post) => (
-							<div key={post.$id}>
-								<PostCard {...post} />
-							</div>
-						))}
-					</Masonry>
-				</Container>
+				<Masonry
+					breakpointCols={breakpointColumnsObj}
+					className="my-masonry-grid"
+					columnClassName="my-masonry-grid_column"
+				>
+					{posts?.map((post) => (
+						<div key={post.$id}>
+							<PostCard {...post} />
+						</div>
+					))}
+				</Masonry>
 			)}
-		</>
+		</Container>
 	);
 }
 

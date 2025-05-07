@@ -21,7 +21,6 @@ function App() {
 			.then((userData) => {
 				if (userData) {
 					dispatch(login(userData));
-					// navigate("/");
 				} else {
 					dispatch(logout());
 					navigate("/");
@@ -33,7 +32,9 @@ function App() {
 	return (
 		<>
 			{loading ? (
-				<div className="loader"></div>
+				<div className="w-full flex justify-center mt-5">
+					<div className="loader"></div>
+				</div>
 			) : (
 				<div className="relative min-h-screen bg-gradient-to-br from-white via-white to-white overflow-hidden ">
 					{/* blurred floating shapes */}

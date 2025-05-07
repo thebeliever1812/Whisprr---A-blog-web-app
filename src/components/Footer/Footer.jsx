@@ -42,7 +42,7 @@ function Footer() {
 					</div>
 				</div>
 				<div className="copyright text-center w-full mt-1 sm:mt-2 select-none">
-					&#169; Copyright 2025. All Rights Reserved.
+					&#169; 2025 Whisprr. All Rights Reserved.
 				</div>
 			</div>
 		</footer>

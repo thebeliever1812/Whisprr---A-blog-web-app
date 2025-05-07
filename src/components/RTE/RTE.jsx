@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Controller } from "react-hook-form";
 import { Editor } from "@tinymce/tinymce-react";
 
@@ -12,6 +12,7 @@ function RTE({
 	rules = {},
 	errors = {},
 }) {
+	const [isEditorLoading, setIsEditorLoading] = useState(true);
 	return (
 		<>
 			<div className="py-1 px-1 sm:py-1 sm:px-5">
@@ -23,6 +24,20 @@ function RTE({
 			</div>
 
 			<div className="w-full">
+				{isEditorLoading && (
+					<div className="loader-editor w-full flex justify-center">
+						<div class="animate-pulse flex flex-col items-center gap-4 w-60">
+							<div>
+								<div class="w-48 h-6 bg-slate-400 rounded-md"></div>
+								<div class="w-28 h-4 bg-slate-400 mx-auto mt-3 rounded-md"></div>
+							</div>
+							<div class="h-7 bg-slate-400 w-full rounded-md"></div>
+							<div class="h-7 bg-slate-400 w-full rounded-md"></div>
+							<div class="h-7 bg-slate-400 w-full rounded-md"></div>
+							<div class="h-7 bg-slate-400 w-1/2 rounded-md"></div>
+						</div>
+					</div>
+				)}
 				<Controller
 					name={name || "content"}
 					control={control}
@@ -31,6 +46,7 @@ function RTE({
 						<Editor
 							initialValue={defaultValue}
 							apiKey="vqtfpq53rp622tl3gi87tb6w8a1vmlay8y4ck412cgkezru6"
+							onInit={() => setIsEditorLoading(false)}
 							init={{
 								height: 500,
 								plugins: [

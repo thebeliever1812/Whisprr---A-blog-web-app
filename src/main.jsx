@@ -8,14 +8,12 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
 	Login,
 	SignUp,
-	MyBlogs,
-	AddBlog,
 	Home,
 	VerifyEmail,
 	PostCard,
 } from "./components/index.js";
 
-import { Post } from "./pages/index.js";
+import { Post, MyBlogs, AddBlog } from "./pages/index.js";
 
 const router = createBrowserRouter([
 	{
@@ -53,9 +51,9 @@ const router = createBrowserRouter([
 		element: <VerifyEmail />,
 	},
 	{
-		path: '/post',
-		element: <PostCard />
-	}
+		path: "/post",
+		element: <PostCard />,
+	},
 ]);
 
 createRoot(document.getElementById("root")).render(

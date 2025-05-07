@@ -45,7 +45,7 @@ function MyBlogs() {
 	return (
 		<Container>
 			{loading ? (
-				<div className="loader top-20"></div>
+				<div className="loader"></div>
 			) : (
 				<Masonry
 					breakpointCols={breakpointColumnsObj}

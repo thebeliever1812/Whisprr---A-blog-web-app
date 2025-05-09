@@ -67,8 +67,10 @@ Whisprr/
 
 Here are some screenshots of the application:
 
-### Home Page
+### Home Page (When Logout)
 ![Home Page (When Logout)](/public/screenshots/home_ui.png)
+
+### Home Page (When Logged in)
 ![Home Page (When Logged in)](/public/screenshots/home_all_posts.png)
 
 ### Sign Up Page

@@ -63,7 +63,28 @@ Whisprr/
 - **Post Metadata** - Each post includes timestamp.
 - **Persistent Backend** - Uses Appwrite for secure and persistent data storage.
 
-<!-- Screenshots -->
+## 🖼 Screenshots
+
+Here are some screenshots of the application:
+
+### Home Page
+![Home Page (When Logout)](/public/screenshots/home_ui.png)
+![Home Page (When Logged in)](/public/screenshots/home_all_posts.png)
+
+### Sign Up Page
+![Sign Up Page](/public/screenshots/signup_page.png)
+
+### Login Page
+![Login Page](/public/screenshots/login_page.png)
+
+### My Blogs Page
+![My Blogs Page](/public/screenshots/my_blogs_page.png)
+
+### Post
+![Post](/public/screenshots/post.png)
+
+### Add Blog Page
+![Add Blog Page](/public/screenshots/add_blog_page.png)
 
 ## ⚙️ Installation
 

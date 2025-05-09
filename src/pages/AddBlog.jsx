@@ -126,7 +126,7 @@ function AddBlog({ post }) {
 								placeholder="Blog Title here"
 								required="true"
 								labelClass="text-base sm:text-lg"
-								{...register("title", { required: true, maxLength: 20 })}
+								{...register("title", { required: true, maxLength: 100 })}
 								aria-invalid={errors.title ? "true" : "false"}
 							/>
 							{errors.title?.type === "required" ? (

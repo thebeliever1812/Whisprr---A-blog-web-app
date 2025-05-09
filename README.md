@@ -2,7 +2,7 @@
 
 ## 🚀 Description
 
-**Whisprr** is a powerful and elegant blogging platform built with React and Appwrite. It empowers users to create, share, and explore diverse content, ranging from technical articles and stories to tutorials and personal thoughts. Designed with a clean and intuitive interface, Whisprr provides a seamless user experience across devices.
+**Whisprr** is a powerful and elegant blogging platform built with React and Appwrite. It empowers users to create, view and explore diverse content, ranging from technical articles and stories to tutorials and personal thoughts. Designed with a clean and intuitive interface, Whisprr provides a seamless user experience across devices.
 
 ## 🌐 Live Demo
 
@@ -13,6 +13,7 @@
 - 📝 **Write & Publish** - Create and manage blog posts with rich content.
 - 🔍 **Discover** - Browse posts easily.
 - 🧾 **Detailed Blog Pages** - Read full articles with title and timestamp.
+- 🔄 **Full CRUD Support** - Create, Read, Update, and Delete blog posts.
 - 📱 **Responsive Design** - Optimized for all screen sizes.
 - ☁️ **Powered by Appwrite** - Handles authentication, database, and storage.
 - ⚛️ **Modern Stack** - Built with React and Tailwind CSS.
@@ -56,9 +57,10 @@ Whisprr/
 
 - **Create and Publish Posts** - Authenticated users can publish articles.
 - **Read** - Read blogs and detailed content.
+- **Update Posts** - Users can edit their own posts.
+- **Delete Posts** - Users can delete their published posts.
 - **User Authentication** - Login and signup system using Appwrite.
-- **Post Metadata** - Each post includes timestamp
-- **Edit and Delete** - Users can manage their own posts.
+- **Post Metadata** - Each post includes timestamp.
 - **Persistent Backend** - Uses Appwrite for secure and persistent data storage.
 
 <!-- Screenshots -->

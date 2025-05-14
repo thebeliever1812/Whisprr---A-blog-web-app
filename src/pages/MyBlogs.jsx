@@ -1,22 +1,14 @@
 import toast from "react-hot-toast";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { authService, databasesService } from "../appwrite";
 import { Container, PostCard } from "../components";
 import "../Loader.css";
-import Masonry from "react-masonry-css";
-import "./MyBlogs.css";
 import { Query } from "appwrite";
 import { Link } from "react-router-dom";
 
 function MyBlogs() {
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const breakpointColumnsObj = {
-		default: 4,
-		1100: 3,
-		700: 2,
-		500: 1,
-	};
 
 	useEffect(() => {
 		const fetchMyPosts = async () => {
@@ -52,17 +44,13 @@ function MyBlogs() {
 			) : (
 				<>
 					{posts?.length ? (
-						<Masonry
-							breakpointCols={breakpointColumnsObj}
-							className="my-masonry-grid"
-							columnClassName="my-masonry-grid_column"
-						>
+						<div className="posts-container columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
 							{posts?.map((post) => (
-								<div key={post.$id}>
-									<PostCard {...post} showStatus={true}/>
+								<div key={post.$id} className="break-inside-avoid">
+									<PostCard {...post} showStatus={true} />
 								</div>
 							))}
-						</Masonry>
+						</div>
 					) : (
 						<div className="w-full flex flex-col items-center gap-20">
 							<div className="text-2xl text-gray-800 sm:text-4xl font-extrabold roboto text-shadow-current text-shadow-sm mt-5">

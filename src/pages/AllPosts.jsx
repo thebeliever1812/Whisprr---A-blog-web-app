@@ -1,21 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { databasesService } from "../appwrite";
 import toast from "react-hot-toast";
 import { Container, PostCard } from "../components";
 import "../Loader.css";
-import Masonry from "react-masonry-css";
-import "./AllPosts.css";
 import { useSelector } from "react-redux";
 
 function AllPosts() {
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const breakpointColumnsObj = {
-		default: 4,
-		1100: 3,
-		700: 2,
-		500: 1,
-	};
 
 	const userLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
@@ -45,17 +37,13 @@ function AllPosts() {
 					<div className="loader"></div>
 				</div>
 			) : (
-				<Masonry
-					breakpointCols={breakpointColumnsObj}
-					className="my-masonry-grid"
-					columnClassName="my-masonry-grid_column"
-				>
+				<div className="posts-container columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
 					{posts?.map((post) => (
-						<div key={post.$id}>
+						<div key={post.$id} className="break-inside-avoid ">
 							<PostCard {...post} />
 						</div>
 					))}
-				</Masonry>
+				</div>
 			)}
 		</Container>
 	);

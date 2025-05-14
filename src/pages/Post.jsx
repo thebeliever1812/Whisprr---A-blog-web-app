@@ -71,10 +71,10 @@ function Post() {
 						</div>
 
 						<div className="p-6 flex flex-col gap-3">
-							<h4 className="text-2xl font-semibold text-blue-gray-900">
+							<h2 className="text-2xl font-semibold text-blue-gray-900">
 								{post.title}
-							</h4>
-							<div className="text-xl text-gray-700">{parse(post.content)}</div>
+							</h2>
+							<article className="text-xl text-gray-700">{parse(post.content)}</article>
 						</div>
 
 						<div className="btn-date-container gap-2 w-full flex justify-between items-center p-6">

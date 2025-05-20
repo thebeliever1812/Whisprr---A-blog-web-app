@@ -10,6 +10,7 @@ import VerifyEmail from "./VerifyEmail";
 import RTE from "./RTE/RTE";
 import SelectStatus from './SelectStatus'
 import PostCard from "./PostCard";
+import Protected from "./Protected";
 
 export {
 	Login,
@@ -25,4 +26,5 @@ export {
 	RTE,
 	SelectStatus,
 	PostCard,
+	Protected
 };

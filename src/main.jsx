@@ -11,6 +11,7 @@ import {
 	Home,
 	VerifyEmail,
 	PostCard,
+	Protected,
 } from "./components/index.js";
 
 import { Post, MyBlogs, AddBlog, EditPost } from "./pages/index.js";
@@ -26,29 +27,53 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/my-blogs",
-				element: <MyBlogs />,
+				element: (
+					<Protected authRequired>
+						<MyBlogs />
+					</Protected>
+				),
 			},
 			{
 				path: "/add-blog",
-				element: <AddBlog />,
+				element: (
+					<Protected authRequired>
+						<AddBlog />
+					</Protected>
+				),
 			},
 			{
 				path: "/post/:slug",
-				element: <Post />,
+				element: (
+					<Protected authRequired>
+						<Post />
+					</Protected>
+				),
 			},
 			{
 				path: "/edit-post/:slug",
-				element: <EditPost />,
+				element: (
+					<Protected authRequired>
+						<EditPost />
+					</Protected>
+				),
 			},
 		],
 	},
 	{
 		path: "/log-in",
-		element: <Login />,
+		element: (
+			<Protected authRequired={false}>
+				<Login />
+			</Protected>
+		),
 	},
 	{
 		path: "/sign-up",
-		element: <SignUp />,
+		element: (
+			<Protected authRequired={false}>
+				<SignUp />
+			</Protected>
+		),
 	},
 	{
 		path: "/verify-email",

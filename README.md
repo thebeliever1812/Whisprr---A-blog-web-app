@@ -98,7 +98,7 @@ To set up the project locally, follow these steps:
    ```
 2. **Navigate to the project directory:**
    ```sh
-   cd Whisprr
+   cd Whisprr---A-blog-web-app
    ```
 3. **Install dependencies:**
 

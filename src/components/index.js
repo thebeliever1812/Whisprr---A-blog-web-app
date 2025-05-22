@@ -8,9 +8,10 @@ import Input from "./Input";
 import Button from "./Button";
 import VerifyEmail from "./VerifyEmail";
 import RTE from "./RTE/RTE";
-import SelectStatus from './SelectStatus'
+import SelectStatus from "./SelectStatus";
 import PostCard from "./PostCard";
 import Protected from "./Protected";
+import LazyLoader from "./LazyLoader";
 
 export {
 	Login,
@@ -26,5 +27,6 @@ export {
 	RTE,
 	SelectStatus,
 	PostCard,
-	Protected
+	Protected,
+	LazyLoader,
 };

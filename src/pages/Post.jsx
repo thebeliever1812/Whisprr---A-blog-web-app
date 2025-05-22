@@ -67,6 +67,7 @@ function Post() {
 								alt={`${post.title} image`}
 								className="w-full object-cover"
 								onError={(e) => (e.target.src = "/fallback.png")}
+								loading="lazy"
 							/>
 						</div>
 

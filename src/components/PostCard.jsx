@@ -11,6 +11,7 @@ function PostCard({ $id, title, image, status, showStatus = false }) {
 						alt={`${title} image`}
 						onError={(e) => (e.target.src = "/fallback.png")}
 						className="object-cover w-full h-full"
+						loading="lazy"
 					/>
 				</div>
 				<div className="p-6">

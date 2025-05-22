@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { authService, databasesService } from "../appwrite";
-import { Container, PostCard } from "../components";
+import { Container, LazyLoader, PostCard } from "../components";
 import "../Loader.css";
 import { Query } from "appwrite";
 import { Link } from "react-router-dom";
@@ -35,6 +35,8 @@ function MyBlogs() {
 
 		fetchMyPosts();
 	}, []);
+
+	const PostCard = lazy(() => import("../components/PostCard"));
 	return (
 		<Container>
 			{loading ? (
@@ -47,7 +49,9 @@ function MyBlogs() {
 						<div className="posts-container columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
 							{posts?.map((post) => (
 								<div key={post.$id} className="break-inside-avoid">
-									<PostCard {...post} showStatus={true} />
+									<Suspense fallback={<LazyLoader />}>
+										<PostCard {...post} showStatus={true} />
+									</Suspense>
 								</div>
 							))}
 						</div>
